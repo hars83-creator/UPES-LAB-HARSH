@@ -1,13 +1,13 @@
 export default function ActionButton({ icon: Icon, children, variant = 'default', className = '', ...props }) {
   const styles = {
     default:
-      'border-slate-300 bg-white text-slate-800 hover:border-cyan-500 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-cyan-400 dark:hover:text-cyan-200',
+      'border-white/10 bg-white/[0.07] text-white/80 hover:border-cyan-200/50 hover:bg-cyan-300/12 hover:text-white',
     primary:
-      'border-cyan-600 bg-cyan-600 text-white hover:border-cyan-500 hover:bg-cyan-500 dark:border-cyan-500 dark:bg-cyan-500 dark:text-slate-950',
+      'border-cyan-200/30 bg-cyan-300 text-slate-950 shadow-[0_0_34px_rgba(34,211,238,0.34)] hover:border-cyan-100 hover:bg-cyan-200',
     danger:
-      'border-rose-400 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-500/60 dark:bg-rose-950/40 dark:text-rose-200',
+      'border-rose-300/40 bg-rose-400/12 text-rose-100 hover:bg-rose-400/20',
     quiet:
-      'border-transparent bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700'
+      'border-transparent bg-white/[0.06] text-white/70 hover:bg-white/[0.10] hover:text-white'
   };
 
   return (

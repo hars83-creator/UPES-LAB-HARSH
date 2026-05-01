@@ -12,12 +12,15 @@ import {
   Zap
 } from 'lucide-react';
 import ActionButton from './ActionButton.jsx';
+import AchievementDeck from './AchievementDeck.jsx';
 import AssistantPanel from './AssistantPanel.jsx';
 import ControlPanel from './ControlPanel.jsx';
 import LabVisualization from './LabVisualization.jsx';
 import ObservationTable from './ObservationTable.jsx';
 import QuizPanel from './QuizPanel.jsx';
+import ReadingIntelligence from './ReadingIntelligence.jsx';
 import RealTimeChart from './RealTimeChart.jsx';
+import VirtualBench from './VirtualBench.jsx';
 import { exportLabReport } from '../lib/report.js';
 import { formatValue, percentError, readingId } from '../lib/utils.js';
 
@@ -130,7 +133,7 @@ export default function ExperimentShell({ experiment }) {
   }
 
   return (
-    <main className="min-w-0 flex-1 overflow-y-auto">
+    <main className="min-w-0 flex-1">
       <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
         <header className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
@@ -174,35 +177,35 @@ export default function ExperimentShell({ experiment }) {
         ) : null}
 
         <section className="mb-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="glass-panel rounded-lg p-4 shadow-lab">
+          <div className="premium-panel rounded-lg p-4 shadow-lab">
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <h2 className="text-sm font-black uppercase tracking-[0.16em] text-slate-700 dark:text-slate-200">
+                <h2 className="text-sm font-black uppercase tracking-[0.16em] text-cyan-200">
                   Aim
                 </h2>
-                <p className="mt-2 text-sm font-semibold leading-6 text-slate-700 dark:text-slate-200">
+                <p className="mt-2 text-sm font-semibold leading-6 text-white/70">
                   {experiment.aim}
                 </p>
               </div>
               <div>
-                <h2 className="text-sm font-black uppercase tracking-[0.16em] text-slate-700 dark:text-slate-200">
+                <h2 className="text-sm font-black uppercase tracking-[0.16em] text-cyan-200">
                   Theory
                 </h2>
-                <p className="mt-2 text-sm font-semibold leading-6 text-slate-700 dark:text-slate-200">
+                <p className="mt-2 text-sm font-semibold leading-6 text-white/70">
                   {experiment.theory}
                 </p>
               </div>
             </div>
 
-            <div className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-800">
-              <h2 className="text-sm font-black uppercase tracking-[0.16em] text-slate-700 dark:text-slate-200">
+            <div className="mt-4 border-t border-white/10 pt-4">
+              <h2 className="text-sm font-black uppercase tracking-[0.16em] text-cyan-200">
                 Real-time Formula
               </h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {experiment.formulas.map((formula) => (
                   <code
                     key={formula}
-                    className="rounded-md border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200"
+                    className="rounded-md border border-cyan-200/20 bg-cyan-300/10 px-3 py-2 text-xs font-bold text-cyan-50"
                   >
                     {formula}
                   </code>
@@ -211,8 +214,8 @@ export default function ExperimentShell({ experiment }) {
             </div>
           </div>
 
-          <div className="glass-panel rounded-lg p-4 shadow-lab">
-            <h2 className="text-sm font-black uppercase tracking-[0.16em] text-slate-700 dark:text-slate-200">
+          <div className="premium-panel rounded-lg p-4 shadow-lab">
+            <h2 className="text-sm font-black uppercase tracking-[0.16em] text-cyan-200">
               Apparatus
             </h2>
             <div className="mt-3 grid grid-cols-2 gap-3">
@@ -221,10 +224,10 @@ export default function ExperimentShell({ experiment }) {
                 return (
                   <div
                     key={item}
-                    className="flex min-h-14 items-center gap-3 rounded-md border border-slate-200 bg-white/70 px-3 dark:border-slate-800 dark:bg-slate-950/40"
+                    className="flex min-h-14 items-center gap-3 rounded-md border border-white/10 bg-white/[0.06] px-3"
                   >
-                    <Icon className="h-5 w-5 shrink-0 text-cyan-600 dark:text-cyan-300" aria-hidden="true" />
-                    <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{item}</span>
+                    <Icon className="h-5 w-5 shrink-0 text-cyan-200" aria-hidden="true" />
+                    <span className="text-sm font-bold text-white/80">{item}</span>
                   </div>
                 );
               })}
@@ -241,6 +244,7 @@ export default function ExperimentShell({ experiment }) {
               running={running}
               time={time}
             />
+            <VirtualBench apparatus={experiment.apparatus} />
             <RealTimeChart
               title="Real-time Graph"
               data={graphData}
@@ -255,33 +259,34 @@ export default function ExperimentShell({ experiment }) {
 
           <div className="space-y-4">
             <ControlPanel controls={experiment.controls} values={controls} onChange={updateControl} />
-            <section className="glass-panel rounded-lg p-4 shadow-lab">
-              <h2 className="text-sm font-black uppercase tracking-[0.16em] text-slate-700 dark:text-slate-200">
+            <ReadingIntelligence readingsCount={readings.length} resultReady={resultReady} error={error} />
+            <section className="premium-panel rounded-lg p-4 shadow-lab">
+              <h2 className="text-sm font-black uppercase tracking-[0.16em] text-cyan-200">
                 Final Calculations
               </h2>
               {!resultReady ? (
-                <p className="mt-3 text-sm font-semibold leading-6 text-slate-600 dark:text-slate-300">
+                <p className="mt-3 text-sm font-semibold leading-6 text-white/60">
                   Capture at least {minimumReadings} reading{minimumReadings > 1 ? 's' : ''} to finalize this result.
                 </p>
               ) : (
                 <div className="mt-4 space-y-3">
-                  <div className="rounded-md border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-950/40">
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">{result.label}</p>
-                    <p className="mt-2 font-mono text-xl font-black text-slate-950 dark:text-white">
+                  <div className="rounded-md border border-white/10 bg-white/[0.06] p-3">
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/50">{result.label}</p>
+                    <p className="mt-2 font-mono text-xl font-black text-white">
                       {formatValue(result.value, result.unit, 4)}
                     </p>
                   </div>
                   {result.reference ? (
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-md border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-950/40">
-                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Accepted</p>
-                        <p className="mt-2 font-mono text-sm font-black text-slate-800 dark:text-slate-100">
+                      <div className="rounded-md border border-white/10 bg-white/[0.06] p-3">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/50">Accepted</p>
+                        <p className="mt-2 font-mono text-sm font-black text-white">
                           {formatValue(result.reference, result.unit, 4)}
                         </p>
                       </div>
-                      <div className="rounded-md border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-950/40">
-                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Error</p>
-                        <p className="mt-2 font-mono text-sm font-black text-rose-700 dark:text-rose-300">
+                      <div className="rounded-md border border-white/10 bg-white/[0.06] p-3">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/50">Error</p>
+                        <p className="mt-2 font-mono text-sm font-black text-rose-200">
                           {error === null ? '-' : `${error.toFixed(2)} percent`}
                         </p>
                       </div>
@@ -289,7 +294,7 @@ export default function ExperimentShell({ experiment }) {
                   ) : null}
                   <ul className="space-y-2">
                     {result.details?.map((detail) => (
-                      <li key={detail} className="text-sm font-semibold leading-6 text-slate-600 dark:text-slate-300">
+                      <li key={detail} className="text-sm font-semibold leading-6 text-white/60">
                         {detail}
                       </li>
                     ))}
@@ -303,7 +308,10 @@ export default function ExperimentShell({ experiment }) {
               setCurrentStep={setCurrentStep}
               guided={guided}
               setGuided={setGuided}
+              readingsCount={readings.length}
+              error={error}
             />
+            <AchievementDeck readingsCount={readings.length} error={error} />
             <QuizPanel quiz={experiment.quiz} />
           </div>
         </section>

@@ -11,6 +11,9 @@ Full-stack interactive virtual physics lab for engineering students.
 - Real-time animated instruments for LEDs, sonometer strings, Hall probes, coils, magnets, optical fiber rays, diffraction, solar cells, photoelectric emission, and PN junction response.
 - Recharts graph plotting, Framer Motion animations, random reading noise, slope/constant calculations, error percentage, and PDF lab report export.
 - Express API for saving generated report data locally in `reports/reports.json`.
+- Premium command center with Student, Teacher, and Admin role views.
+- Codespaces-ready devcontainer with forwarded React and API ports.
+- Virtual bench, AI reading intelligence, achievement system, and class analytics surfaces.
 
 ## Experiments
 
