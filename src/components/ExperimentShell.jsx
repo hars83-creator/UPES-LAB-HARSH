@@ -103,8 +103,8 @@ export default function ExperimentShell({ experiment }) {
     setSaveStatus('');
   }
 
-  function exportPdf() {
-    exportLabReport({ experiment, controls, readings, result });
+  async function exportPdf() {
+    await exportLabReport({ experiment, controls, readings, result });
   }
 
   async function saveReport() {

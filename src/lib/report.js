@@ -1,4 +1,3 @@
-import jsPDF from 'jspdf';
 import { formatValue, percentError } from './utils.js';
 
 function addWrapped(doc, text, x, y, width, lineHeight = 6) {
@@ -7,7 +6,8 @@ function addWrapped(doc, text, x, y, width, lineHeight = 6) {
   return y + lines.length * lineHeight;
 }
 
-export function exportLabReport({ experiment, controls, readings, result }) {
+export async function exportLabReport({ experiment, controls, readings, result }) {
+  const { default: jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 14;
